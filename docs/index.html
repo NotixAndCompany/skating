@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Тренировочная неделя на льду</title>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:dark;background:#0d1318;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Тренировочная неделя на льду</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -6,21 +6,17 @@
 <style>
 /* Layout: одна колонка-«борт», вкладки по группам; внутри — переключатель типа недели и сетка карточек-сессий, на телефоне в столбик */
 :root{
-  --bg:#eef3f6; --surface:#ffffff; --ink:#132029; --muted:#5a6b77; --line:#d3dde4;
-  --accent:#1d4fc4; --accent-soft:#e2eafb; --red:#c8323b; --red-soft:#fbe5e6;
-  --ok:#1f7a55; --ok-soft:#e0f2ea; --warn:#a46200; --warn-soft:#fbefdc;
+  --bg:#0d1318; --surface:#151e25; --ink:#e4ecf1; --muted:#93a4b0; --line:#273540;
+  --accent:#7ea2ff; --accent-soft:#1c2a47; --red:#ff7a80; --red-soft:#3a1c20;
+  --ok:#5fd0a0; --ok-soft:#173329; --warn:#f0b35a; --warn-soft:#3a2b14;
   --f-display:"Unbounded","Golos Text",system-ui,sans-serif;
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0d1318; --surface:#151e25; --ink:#e4ecf1; --muted:#93a4b0; --line:#273540;
-  --accent:#7ea2ff; --accent-soft:#1c2a47; --red:#ff7a80; --red-soft:#3a1c20;
-  --ok:#5fd0a0; --ok-soft:#173329; --warn:#f0b35a; --warn-soft:#3a2b14; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0d1318; --surface:#151e25; --ink:#e4ecf1; --muted:#93a4b0; --line:#273540;
-  --accent:#7ea2ff; --accent-soft:#1c2a47; --red:#ff7a80; --red-soft:#3a1c20;
-  --ok:#5fd0a0; --ok-soft:#173329; --warn:#f0b35a; --warn-soft:#3a2b14; color-scheme:dark}
+/* Светлая тема отключена. Чтобы вернуть: кнопка #themebtn в шапке и блоки :root[data-theme="light"] с этой палитрой:
+   --bg:#eef3f6; --surface:#ffffff; --ink:#132029; --muted:#5a6b77; --line:#d3dde4; --accent:#1d4fc4; --accent-soft:#e2eafb;
+   --red:#c8323b; --red-soft:#fbe5e6; --ok:#1f7a55; --ok-soft:#e0f2ea; --warn:#a46200; --warn-soft:#fbefdc */
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
 .wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
@@ -190,7 +186,7 @@ tr:last-child td{border-bottom:0}
 
 <div class="wrap">
 <header>
-  <div class="toprow"><p class="codes">T · S · Lo · F · Lz · A — сезон 2026/27 · лёд 60 мин</p><button type="button" class="themebtn" id="themebtn" aria-label="Тема оформления">Тема: как в системе</button></div>
+  <div class="toprow"><p class="codes">T · S · Lo · F · Lz · A — сезон 2026/27 · лёд 60 мин</p></div>
   <h1>Тренировочная неделя на льду</h1>
   <p class="lede">Три группы: КМС и МС, 1–2 спортивный разряд, любители. Соревновательный период со стартами раз в 2–3 недели. КП и ПП чередуются по дням. В основе — требования ISU и БСК 2026/27, учебник под редакцией А. Н. Мишина и исследования по нагрузке.</p>
   <div class="rinkline" aria-hidden="true"></div>
@@ -1178,7 +1174,7 @@ renderCalendar();
 
 /* ---------- переключатель темы: как в системе → светлая → тёмная ---------- */
 (()=>{
-  const btn=document.getElementById('themebtn'),root=document.documentElement;
+  const btn=document.getElementById('themebtn'),root=document.documentElement;if(!btn){root.setAttribute('data-theme','dark');return;}
   const NAMES={auto:'Тема: как в системе',light:'Тема: светлая',dark:'Тема: тёмная'};
   let mode='auto';try{mode=localStorage.getItem('theme')||'auto'}catch(e){}
   const apply=()=>{if(mode==='auto')root.removeAttribute('data-theme');else root.setAttribute('data-theme',mode);btn.textContent=NAMES[mode]||NAMES.auto;};
