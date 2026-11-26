@@ -97,7 +97,7 @@ tr:last-child td{border-bottom:0}
 .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
 .filters label{display:grid;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
 .filters input,.filters select{font:14px var(--f-body);padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-width:0}
-.filters input{width:220px;max-width:100%}
+.filters input{width:220px;max-width:100%;box-sizing:border-box}
 .jumpbtns{display:flex;gap:4px;flex-wrap:wrap}
 .jb{font:500 12px var(--f-mono);padding:6px 9px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);cursor:pointer}
 .jb[aria-pressed="true"]{background:var(--accent);color:var(--surface);border-color:var(--accent)}
@@ -171,6 +171,11 @@ tr:last-child td{border-bottom:0}
   .tbl-wrap td:first-child::before{display:none}
   #rows td:first-child{font-weight:500}
   #rows tr{padding:8px 12px;margin-bottom:6px}
+  #rows tr.grp{background:transparent;border:0;padding:14px 2px 2px;margin-bottom:0}
+  #rows tr.grp td{display:block;background:none;border:0;padding:0}
+  #rows tr.solo td{background:none;border-top:0}
+  #rows tr.sub{margin-left:12px}
+  #rows tr.sub td:first-child{padding-left:0}
   #rows td{display:inline-block;margin-right:8px}
   #rows td:first-child{display:block}
   #rows td[data-label]::before{display:none}
@@ -546,6 +551,14 @@ tr:last-child td{border-bottom:0}
 .ex-desc{font-size:12.5px;margin-top:2px}
 .ex-src{font-size:12px;color:var(--muted);margin-top:4px}
 .ex-src summary{cursor:pointer}
+.vchips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;align-items:center}
+.vchips span{font-size:12px;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--ink)}
+.vchips .vlabel{background:none;border:0;padding:0 2px 0 0;color:var(--muted)}
+#rows tr.grp td{background:var(--bg);padding:12px 12px 8px;border-bottom:1px solid var(--line)}
+.grp-name{font-family:var(--f-display);font-size:14px;font-weight:600}
+.grp-sub{font-size:12px;color:var(--muted);margin-top:2px}
+#rows tr.sub td:first-child{padding-left:28px}
+#rows tr.solo td{background:var(--bg);border-top:1px solid var(--line)}
 .chains{display:grid;gap:14px}
 .chain{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px;min-width:0}
 .chain-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
@@ -592,7 +605,9 @@ tr:last-child td{border-bottom:0}
       <h3>Что сделано и что проверить</h3>
       <div class="stat" id="base-stat"></div>
       <ul class="tight" style="margin-top:10px">
-        <li>Собрал записи из четырёх баз Notion и черновика тренировок. Одинаковые и почти одинаковые упражнения объединил в одну карточку, разновидности перенёс в «Варианты».</li>
+        <li><b>Группа — это упражнение, строки внутри — его варианты.</b> Например, группа «Тройки»: вперёд, назад, с перебежкой, с перетяжкой. У каждого варианта свой уровень и своя оценка.</li>
+        <li>Мелкие различия (руки, направление, скорость) записаны чипами «Варианты» внутри строки.</li>
+        <li>Настоящие дубли склеены: змейка и перетяжка — одно упражнение, «Крюк или выкрюк с перетяжкой» теперь «Крюки через перетяжку».</li>
         <li>Поиск находит упражнение и по старым названиям из Notion, даже если карточка теперь называется иначе.</li>
         <li><b>Уточнить</b> — названия, которые я не смог понять однозначно. Включите «Только с пометкой», чтобы пройтись по ним.</li>
         <li>Пустые записи и заголовки без упражнений («По большому кругу», «По маленькому кругу») убраны.</li>
@@ -866,8 +881,7 @@ X('Торможение','SK',1),
 X('Перекаты с ноги на ногу','SK',1,{d:'Ноги шире плеч, вес переносим не вставая',v:'вперёд и назад'}),
 X('Толчки одной ногой','SK',1,{d:'Сели, толчок и встали, подставили ногу, сели',v:'как ёлочка; как фонарик; руки как на перебежке или в круг',a:['Толчки одной ногой как елочка','Толчки одной ногой как фонарик']}),
 X('Дуги','SK',1,{v:'на всех рёбрах, вперёд и назад',a:['Дуги','Дуги ВСЕ']}),
-X('Змейка на двух ногах','SK',1,{v:'узкая, средняя, широкая; вперёд и назад',a:['Змейка на двух ногах (в 2 базах)','Широкая змейка','На двух змейки вперёд и назад']}),
-X('Перетяжка на двух ногах','SK',1),
+X('Змейка на двух ногах','SK',1,{d:'Перетяжка — то же самое упражнение',v:'узкая, средняя, широкая; вперёд и назад',a:['Перетяжка на двух ногах','Змейка на двух ногах (в 2 базах)','Широкая змейка','На двух змейки вперёд и назад']}),
 X('Скрестный шаг','SK',1,{d:'Подготовка к кроссроллу: то же движение, но шагом',v:'вперёд и назад'}),
 X('Кроссролл','SK',1,{d:'Нога не переступает, а заносится перед ботинком',v:'вперёд и назад; руки наверх; с наклоном',a:['Кроссрол','Кроссроллы','Кросс роллы','Кроссролл (база)','Кроссроллы руки наверх','Кроссроллы с наклоном']}),
 X('Циркуль','SK',1,{d:'Нужен и как заход во вращение у новичков',a:['Циркуль (в 2 базах)']}),
@@ -879,15 +893,14 @@ X('Перебежка по восьмёрке','SK',2,{v:'с резиной',inv
 X('Перебежка по параграфу','SK',3,{a:['Перебежка по параграфу (в 2 базах)']}),
 X('Перебежка через моухок','SK',2,{tu:['моухок'],v:'по маленькому и по большому кругу',a:['Перебежка вперед, моухок, перебежка назад','Перебежка через моухок (по маленькому кругу)','Перебежка через моухок (по большому кругу)']}),
 X('Перебежка с наклоном в ласточку','SK',2,{v:'через перетяжку; по большому кругу',a:['Перебежка вперед перетяжка ласточка','Перебежка наклон ласточка','Перебежка наклон перетяжка ласточка (по большому кругу)','Перебежки с наклоном в ласточку']}),
-X('Змейка на одной ноге','SK',2,{d:'Быстрая или на отжим',v:'вперёд и назад; свободная нога впереди, сбоку, сзади; руки наверх, в стороны, назад; захват ноги',a:['Змейка на одной ноге','Змейка с ногой вперед','Змейка с ногой назад','Змейка нога в сторону','Змейка руки наверх нога вперед','Змейка руки в сторону нога сзади','Змейка руки наверх нога в сторону','Змейка с руками назад']}),
+X('Змейка на одной ноге','SK',2,{d:'Быстрая или на отжим. Перетяжка на одной ноге — то же самое упражнение',v:'вперёд и назад; свободная нога впереди, сбоку, сзади; руки наверх, в стороны, назад; захват ноги',a:['Перетяжка на одной ноге','Змейка на одной ноге','Змейка с ногой вперед','Змейка с ногой назад','Змейка нога в сторону','Змейка руки наверх нога вперед','Змейка руки в сторону нога сзади','Змейка руки наверх нога в сторону','Змейка с руками назад']}),
 X('Змейка «носок у пятки»','SK',2,{a:['Змейка носок у пятки (в 2 базах)']}),
 X('Выпады','SK',2,{v:'вперёд и назад',a:['Выпад вперед','Выпад назад']}),
-X('Перетяжка на одной ноге','SK',2),
 X('Конькобежные толчки','SK',2,{a:['Конькобежные толчки (в 2 базах)']}),
-X('Зубцовый шаг','SK',2),
+X('Зубцовый шаг','SK',2,{f:'Что это за шаг? Нужно описание: пока без пояснения.'}),
 X('Пьяный шаг','SK',2,{tu:['скоба'],v:'со скобой — уровень 3',a:['Пьяный шаг (в 2 базах)','Пьяный шаг со скобой (в 2 базах)','Пьяный шаг с оскобами']}),
 X('Обманный шаг','SK',2,{v:'широкий; с выездом; через моухок; через тройку; в перебежке',a:['Обманный шаг (в 2 базах)','Перебежка с обманным шагом','Обманный шаг через моухок','Обманный шаг через тройку','Обманный шаг широкий','Обманный шаг с выездом']}),
-X('Внутрь-внутрь-наружу-наружу','SK',2),
+X('Крюки через перетяжку','SK',3,{id:'vnutr-vnutr-naruzhu-naruzhu',tu:['крюк','выкрюк'],v:'крюк; выкрюк',a:['Внутрь-внутрь-наружу-наружу','Крюк или выкрюк с перетяжкой','Крюк с перетяжкой (в 2 базах)','Выкрюк с перетяжкой (уточнить)','Выкрюки с перетяжкой']}),
 X('Тройки вперёд по большому кругу','SK',2,{tu:['тройка'],v:'наружу и внутрь; медленно и быстро; переход через перебежку, зубцы, подпрыжку или кораблик',a:['Тройки наружу по большому кругу','Тройку внутрь по больш кругу','Тройки нажуру']}),
 X('Тройки назад','SK',3,{tu:['тройка'],v:'наружу и внутрь',a:['Тройки назад наружу','Тройки назад внутрь']}),
 X('Тройка + перебежка','SK',2,{tu:['тройка'],v:'перебежка вперёд или назад; внутренняя тройка; с выходом на ход вперёд',a:['Тройка перебежка (в 3 базах)','Тройка перебежка назад','Внутренняя тройка перебежка вперед','Тройка внутрь перебежка назад влево и встать на ход вперед']}),
@@ -904,7 +917,6 @@ X('Чоктау через кроссролл','SK',3,{tu:['чоктау'],a:['�
 X('Крюки','SK',3,{tu:['крюк'],v:'наружу и внутрь; по прямой',a:['Крюки наружу','Круки внутрь','Крюк по прямой']}),
 X('Выкрюки','SK',3,{tu:['выкрюк'],v:'наружу и внутрь',a:['Выкрюки наружу','Выкрюки внутрь']}),
 X('Крюк — выкрюк','SK',3,{tu:['крюк','выкрюк'],v:'подряд; широкие; через кроссролл в любом порядке',a:['Крюк выкрюк (в 3 базах)','Крюк выкрюк крюк выкрюк','Крюк выкрюк кроссролл (в 2 базах)','Крюк кроссролл выкрюк (в 2 базах)','Крюк выкрюк широкие','Крюк выкрюк через кроссроллы']}),
-X('Крюк или выкрюк с перетяжкой','SK',3,{tu:['крюк','выкрюк'],a:['Крюк с перетяжкой (в 2 базах)','Выкрюк с перетяжкой (уточнить)','Выкрюки с перетяжкой']}),
 X('Крюк — оттянуться — крюк','SK',3,{tu:['крюк'],a:['Крюк оттянуться крюк (в 2 базах)']}),
 X('Кроссролл с крюком','SK',3,{tu:['крюк']}),
 X('Крюк или выкрюк + чоктау','SK',3,{tu:['крюк','выкрюк','чоктау'],v:'крюк — чоктау; выкрюк — чоктау; крюк или выкрюк — два чоктау подряд',a:['Крюк чоктау','Выкрюк чоктау','Чоктау с крюком (уточнить)','Крюк 2 чоктау (уточнить)','Выкрюк 2 чоктау (уточнить)']}),
@@ -996,6 +1008,49 @@ X('Бильман','SP',3),
 X('Кольцо','SP',3)
 ];
 
+/* Группы: «упражнение» и его варианты. Id упражнений не менять: на них держатся оценки. */
+const GR={};const byId={};EX.forEach(e=>byId[e.id]=e);
+[
+['elochka-fonariki','Ёлочка и фонарики',['fonariki','elochka','tolchki-odnoy-nogoy']],
+['zmeyka','Змейка (перетяжка)',['zmeyka-na-dvuh-nogah','zmeyka-na-odnoy-noge','zmeyka-nosok-u-pyatki']],
+['krossroll','Кроссролл',['skrestnyy-shag','krossroll']],
+['perebezhka','Перебежка',['perebezhka-vpered','perebezhka-nazad','bystrye-perebezhki','perebezhka-po-zmeyke','perebezhka-po-vosmerke','perebezhka-po-paragrafu','perebezhka-cherez-mouhok','perebezhka-s-naklonom-v-lastochku']],
+['shagi','Шаги',['obmannyy-shag','pyanyy-shag','zubcovyy-shag']],
+['troyki','Тройки',['troyki-vpered-po-bolshomu-krugu','troyki-nazad','troyka-perebezhka','troyka-peretyazhka-seriey']],
+['troyki-mnogo','Двухкратные и трёхкратные тройки',['dvuhkratnye-troyki-vpered','dvuhkratnye-troyki-nazad','dvuhkratnye-troyki-v-svyazkah','trehkratnye-troyki']],
+['valsovye','Вальсовые тройки',['valsovye-troyki','valsovye-troyki-cherez-kryuk']],
+['choktau','Чоктау',['choktau','choktau-cherez-krossroll','kryuk-ili-vykryuk-choktau']],
+['kryuki','Крюки и выкрюки',['kryuki','vykryuki','kryuk-vykryuk','vnutr-vnutr-naruzhu-naruzhu','kryuk-ottyanutsya-kryuk','krossroll-s-kryukom']],
+['skoby','Скобы',['skoby','skoby-s-peretyazhkoy']],
+['petli','Петли',['petli','troyka-petlya']],
+['tvizly','Твизлы',['tvizly','tvizly-v-svyazkah']],
+['bloki','Блоки сложных поворотов',['bloki-tri-slozhnyh-povorota-podryad','svyazki-so-zmeykoy-i-slozhnymi-povorotami']],
+['raspryzhka-baz','Базовая распрыжка',['podprygivaniya','pereskoki','cako','tury']],
+['raspryzhka-povoroty','Распрыжка с шагами и поворотами',['tvizly-na-pryzhki','bystrye-malenkie-troyki','zmeyka-s-pryzhkami','pyanyy-shag-pereskok-zubchiki','pyanyy-shag-so-skoboy-cako']],
+['pd-aksel','Подводящие к Акселю',['perekidnoy','aksel-s-mesta-s-podskoka-s-rukoy-naverh','vnutrenniy-aksel']],
+['pd-tulup','Подводящие к Тулупу',['cirkul-na-tulup','tulup-na-levuyu']],
+['pd-rittberger','Подводящие к Риттбергеру',['rittbergerovye-troyki','rittbergerovye-tvizly-seriya-rittbergerov']],
+['pd-flip','Подводящие к Флипу',['troyka-flipovyy-pryzhok-v-pol-oborota','flip-v-shpagate','cako-na-pravuyu-cako-na-levuyu-flip']],
+['pd-lutc','Подводящие к Лутцу',['lutc-v-shpagate','troyka-podskok-podskok-lutc','cako-na-levuyu-lutc','troyka-podsechka-vykryuk-lutc']],
+['jp-salhov','Заходы на Сальхов',['salhov-s-perebezhki','salhov-s-shagov-i-povorotov']],
+['jp-rittberger','Заходы на Риттбергер',['rittberger-po-krugu','rittberger-s-shagov-i-povorotov']],
+['jp-lutc','Заходы на Лутц',['lutc-s-perebezhki','lutc-s-shagov']],
+['jp-all','Заходы для любого прыжка',['vse-pryzhki-s-troek','vse-pryzhki-cherez-pereskok','vse-pryzhki-cherez-krossrolly','dvoynye-s-cako','pryzhki-s-kryuka-vykryuka','pryzhki-s-vintov','pereskok-cako-oyler-pryzhok']],
+['us-kaskady','Каскады и комбинации',['kaskady-s-tulupom','kaskady-s-salhovom-cherez-oyler','kaskady-s-flipom-cherez-oyler','kaskady-s-rittbergerom','kombinacii-s-akselem']],
+['us-serii','Серии прыжков',['seriya-rittbergerov','pryzhok-otskok-pryzhok']],
+['sp-vint','Винт',['vraschenie-na-dvuh-nogah','vint','vint-so-smenoy-nogi']],
+['sp-volchok','Волчок',['volchok','volchok-so-skladkoy','volchok-so-smenoy-nogi']],
+['sp-libela','Либела',['libela','libela-so-smenoy-nogi','libela-v-obe-storony','pryzhok-v-libelu']],
+['sp-zaklon','Заклон и Бильман',['zaklon','bilman']]
+].forEach(([k,n,ids])=>{
+  GR[k]={n,ids};
+  ids.forEach(id=>{if(!byId[id])throw new Error('нет упражнения '+id);byId[id].g=k;});
+});
+/* порядок: группа целиком стоит на месте своего первого упражнения */
+(()=>{const seen=new Set(),out=[];
+  EX.forEach(e=>{if(e.g){if(seen.has(e.g))return;seen.add(e.g);GR[e.g].ids.forEach(id=>out.push(byId[id]));}else out.push(e);});
+  EX.length=0;out.forEach(e=>EX.push(e));})();
+
 const LVN={1:'1 новички',2:'2 база',3:'3 продвинутые'};
 const JUMP_ORDER=['A','T','S','Lo','F','Lz'];
 const JUMP_NAME={T:'Тулуп',S:'Сальхов',Lo:'Риттбергер',F:'Флип',Lz:'Лутц',A:'Аксель'};
@@ -1005,7 +1060,7 @@ const state={q:'',type:'',lvl:'',turn:'',jump:'',flag:false,tier:''};
    На claude.ai — база страницы (коллекция tiers). Вне claude.ai — Google Таблица через веб-приложение Apps Script (TIERS_URL).
    TIER_SEED — снимок оценок на 26.11.2026: показывается, пока источник недоступен, и заливается в таблицу функцией setup(). */
 const TIERS_URL='https://script.google.com/macros/s/AKfycbw5gTGKny_NorKZYN47tNtXLXcKgu31YNu0WoewmAmgWUfSC_NSXiXXju--kDPFo1zGoA/exec';
-const TIER_SEED={"aksel-s-hoda-vpered":"A","bystrye-malenkie-troyki":"S","cako":"S","cako-na-levuyu-lutc":"B","cako-na-pravuyu-cako-na-levuyu-flip":"B","cirkul-na-tulup":"A","dvoynye-s-cako":"A","flip-cherez-pereskok-ili-podskok":"C","flip-v-shpagate":"A","kaskady-s-flipom-cherez-oyler":"S","kaskady-s-rittbergerom":"S","kaskady-s-salhovom-cherez-oyler":"S","kaskady-s-tulupom":"S","kombinacii-s-akselem":"S","lutc-s-perebezhki":"A","lutc-s-shagov":"A","lutc-v-shpagate":"A","obratnyy-vint-rittberger":"S","perebezhka-salhovye-troyki":"A","pereskok-cako-oyler-pryzhok":"S","pereskoki":"A","podprygivaniya":"S","pryzhki-iz-libely":"A","pryzhki-s-kryuka-vykryuka":"A","pryzhki-s-vintov":"A","pryzhok-otskok-pryzhok":"A","pyanyy-shag-pereskok-zubchiki":"B","pyanyy-shag-so-skoboy-cako":"A","rittberger-po-krugu":"S","rittberger-s-shagov-i-povorotov":"A","rittbergerovye-troyki":"S","rittbergerovye-tvizly-seriya-rittbergerov":"A","salhov-s-perebezhki":"A","salhov-s-shagov-i-povorotov":"A","seriya-rittbergerov":"A","troyka-flipovyy-pryzhok-v-pol-oborota":"B","troyka-podsechka-vykryuk-lutc":"B","troyka-podskok-podskok-lutc":"B","tulup-iz-podsechek":"A","tulup-na-levuyu":"A","tury":"A","tvizly-na-pryzhki":"A","vnutrenniy-aksel":"A","vse-pryzhki-cherez-krossrolly":"A","vse-pryzhki-cherez-pereskok":"A","vse-pryzhki-s-mesta":"A","vse-pryzhki-s-troek":"A","zmeyka-s-pryzhkami":"A"};
+const TIER_SEED={"aksel-s-hoda-vpered":"A","aksel-s-mesta-s-podskoka-s-rukoy-naverh":"A","beduinskiy-pryzhok":"A","bilman":"S","bloki-tri-slozhnyh-povorota-podryad":"S","bystrye-malenkie-troyki":"S","bystrye-perebezhki":"A","cako":"S","cako-na-levuyu-lutc":"B","cako-na-pravuyu-cako-na-levuyu-flip":"B","choktau":"S","cirkul":"B","cirkul-na-tulup":"A","dugi":"S","dvoynye-s-cako":"A","elochka":"S","flip-cherez-pereskok-ili-podskok":"B","flip-v-shpagate":"A","fonariki":"S","hodba-na-noskah-i-na-pyatkah":"A","kaskady-s-flipom-cherez-oyler":"S","kaskady-s-rittbergerom":"S","kaskady-s-salhovom-cherez-oyler":"S","kaskady-s-tulupom":"S","kolco":"A","kombinacii-s-akselem":"S","konkobezhnye-tolchki":"A","krossroll":"S","krossroll-s-kryukom":"A","kryuk-ili-vykryuk-choktau":"A","kryuk-ili-vykryuk-s-peretyazhkoy":"A","kryuk-ottyanutsya-kryuk":"A","kryuk-vykryuk":"A","kryuki":"S","libela":"S","libela-so-smenoy-nogi":"A","libela-v-obe-storony":"B","lutc-s-perebezhki":"A","lutc-s-shagov":"A","lutc-v-shpagate":"A","mouhoki":"S","obmannyy-shag":"A","obratnyy-vint-rittberger":"S","perebezhka-cherez-mouhok":"A","perebezhka-nazad":"S","perebezhka-po-paragrafu":"A","perebezhka-po-vosmerke":"A","perebezhka-po-zmeyke":"S","perebezhka-s-naklonom-v-lastochku":"A","perebezhka-salhovye-troyki":"A","perebezhka-vpered":"S","perekaty-s-nogi-na-nogu":"B","perekidnoy":"S","pereskok-cako-oyler-pryzhok":"S","pereskoki":"A","peretyazhka-na-dvuh-nogah":"A","peretyazhka-na-odnoy-noge":"S","podprygivaniya":"S","pryzhki-iz-libely":"A","pryzhki-s-kryuka-vykryuka":"A","pryzhki-s-vintov":"A","pryzhok-otskok-pryzhok":"A","pryzhok-v-libelu":"A","pyanyy-shag":"A","pyanyy-shag-pereskok-zubchiki":"B","pyanyy-shag-so-skoboy-cako":"A","rittberger-po-krugu":"S","rittberger-s-shagov-i-povorotov":"A","rittbergerovye-troyki":"S","rittbergerovye-tvizly-seriya-rittbergerov":"A","salhov-s-perebezhki":"A","salhov-s-shagov-i-povorotov":"A","samokatik":"A","seriya-rittbergerov":"A","shayby":"A","skoby":"S","skoby-s-peretyazhkoy":"S","skrestnyy-shag":"B","svyazki-so-zmeykoy-i-slozhnymi-povorotami":"A","tolchki-odnoy-nogoy":"A","tormozhenie":"S","troyka-flipovyy-pryzhok-v-pol-oborota":"B","troyka-petlya":"A","troyka-podsechka-vykryuk-lutc":"B","troyka-podskok-podskok-lutc":"B","troyki-vpered-po-bolshomu-krugu":"A","tulup-iz-podsechek":"A","tulup-na-levuyu":"A","tury":"A","tvizly":"S","tvizly-na-pryzhki":"A","tvizly-v-svyazkah":"A","valsovye-troyki":"A","valsovye-troyki-cherez-kryuk":"B","verevochka":"C","vint":"S","vint-so-smenoy-nogi":"A","vnutr-vnutr-naruzhu-naruzhu":"A","vnutrenniy-aksel":"A","volchok":"S","volchok-so-skladkoy":"A","volchok-so-smenoy-nogi":"A","vorobushek":"S","vraschenie-na-dvuh-nogah":"A","vse-pryzhki-cherez-krossrolly":"A","vse-pryzhki-cherez-pereskok":"A","vse-pryzhki-s-mesta":"A","vse-pryzhki-s-troek":"A","vykryuki":"S","vypady":"A","zaklon":"S","zmeyka-na-dvuh-nogah":"A","zmeyka-na-odnoy-noge":"S","zmeyka-nosok-u-pyatki":"A","zmeyka-s-pryzhkami":"A"};
 const TIERS=['S','A','B','C'];
 const TIER_NAME={S:'любимое',A:'хорошее',B:'обычное',C:'слабое'};
 const tiers={...TIER_SEED};
@@ -1080,16 +1135,26 @@ const esc=s=>s.replace(/</g,'&lt;');
 function card(i){
   return `<div class="ex-name">${esc(i.n)}${i.f?' <span class="flag">уточнить</span>':''}</div>`+
     (i.d?`<div class="ex-desc">${esc(i.d)}</div>`:'')+
-    (i.v?`<div class="ex-var">Варианты: ${esc(i.v)}</div>`:'')+
+    (i.v?`<div class="vchips"><span class="vlabel">Варианты:</span>${i.v.split(';').map(x=>`<span>${esc(x.trim())}</span>`).join('')}</div>`:'')+
     (i.f?`<div class="ex-var" style="color:var(--warn)">${esc(i.f)}</div>`:'')+
     (i.inv?`<div class="ex-var">Инвентарь: ${esc(i.inv)}</div>`:'');
 }
 function tierOk(i){const t=tiers[i.id]||'';if(!state.tier)return true;if(state.tier==='none')return !t;if(state.tier==='SA')return t==='S'||t==='A';return t===state.tier;}
+function rowHtml(i,sub){
+  return `<tr class="${sub?'sub':'solo'}"><td>${card(i)}</td><td>${tierCell(i)}</td><td><span class="ty ty-${i.t}">${TYPES[i.t]}</span></td><td><span class="lv lv${i.lv}">${LVN[i.lv]}</span></td><td>${i.j.map(x=>`<span class="tag">${x}</span>`).join('')}${i.tu.map(x=>`<span class="tag">${x}</span>`).join('')}</td></tr>`;
+}
 function draw(){
   const q=state.q.toLowerCase();
-  const r=EX.filter(i=>(!q||(i.n+' '+i.v+' '+i.a.join(' ')).toLowerCase().includes(q))&&(!state.type||i.t===state.type)&&(!state.lvl||String(i.lv)===state.lvl)&&(!state.turn||i.tu.includes(state.turn))&&(!state.jump||i.j.includes(state.jump)||(i.j.includes('все')&&state.jump!=='Eu'))&&(!state.flag||i.f)&&tierOk(i));
+  const r=EX.filter(i=>(!q||(i.n+' '+i.v+' '+i.a.join(' ')+' '+(i.g?GR[i.g].n:'')).toLowerCase().includes(q))&&(!state.type||i.t===state.type)&&(!state.lvl||String(i.lv)===state.lvl)&&(!state.turn||i.tu.includes(state.turn))&&(!state.jump||i.j.includes(state.jump)||(i.j.includes('все')&&state.jump!=='Eu'))&&(!state.flag||i.f)&&tierOk(i));
   document.getElementById('count').textContent=`Показано ${r.length} из ${EX.length}`;
-  document.getElementById('rows').innerHTML=r.map(i=>`<tr><td>${card(i)}</td><td>${tierCell(i)}</td><td><span class="ty ty-${i.t}">${TYPES[i.t]}</span></td><td><span class="lv lv${i.lv}">${LVN[i.lv]}</span></td><td>${i.j.map(x=>`<span class="tag">${x}</span>`).join('')}${i.tu.map(x=>`<span class="tag">${x}</span>`).join('')}</td></tr>`).join('');
+  const done=new Set();let html='';
+  r.forEach(i=>{
+    if(!i.g){html+=rowHtml(i,false);return;}
+    if(done.has(i.g))return;done.add(i.g);
+    const items=r.filter(x=>x.g===i.g),total=GR[i.g].ids.length;
+    html+=`<tr class="grp"><td colspan="5"><div class="grp-name">${esc(GR[i.g].n)}</div><div class="grp-sub">Варианты: ${items.length===total?total:items.length+' из '+total}</div></td></tr>`+items.map(x=>rowHtml(x,true)).join('');
+  });
+  document.getElementById('rows').innerHTML=html;
 }
 function drawChains(){
   const li=i=>`<li>${tiers[i.id]?`<span class="tbadge t-${tiers[i.id]}">${tiers[i.id]}</span> `:''}${esc(i.n)}<span class="lvtag">ур. ${i.lv}</span></li>`;
@@ -1099,8 +1164,8 @@ function drawChains(){
   const all=t=>EX.filter(i=>i.t===t&&(t==='RS'||i.j.includes('все'))).sort((a,b)=>a.lv-b.lv);
   document.getElementById('view-chains').innerHTML=html+`<div class="chain"><div class="chain-h"><h3>Для всех прыжков</h3></div><div class="chain-cols">${col('Распрыжка',all('RS'))}${col('Подводящие и заходы',[...all('PD'),...all('JP')])}${col('Каскады и серии',all('US'))}</div></div>`;
 }
-const merged=EX.filter(i=>i.a.length>1).length, srcN=EX.reduce((s,i)=>s+i.a.length,0), flagged=EX.filter(i=>i.f).length;
-document.getElementById('base-stat').innerHTML=`<div><b>${EX.length}</b><span>упражнений</span></div><div><b>${merged}</b><span>карточек объединяют дубли</span></div><div><b>${flagged}</b><span>с пометкой «уточнить»</span></div>`;
+const nGroups=Object.keys(GR).length, flagged=EX.filter(i=>i.f).length;
+document.getElementById('base-stat').innerHTML=`<div><b>${EX.length}</b><span>вариантов упражнений</span></div><div><b>${nGroups}</b><span>групп-упражнений</span></div><div><b>${flagged}</b><span>с пометкой «уточнить»</span></div>`;
 document.querySelectorAll('.viewseg button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.viewseg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
   const c=b.dataset.view==='chains';document.getElementById('view-list').hidden=c;document.getElementById('view-chains').hidden=!c;
